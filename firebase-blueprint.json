@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User profile information and bank account settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "bankAccount": {
+          "type": "object",
+          "properties": {
+            "accountNumber": { "type": "string" },
+            "ifsc": { "type": "string" },
+            "bankName": { "type": "string" },
+            "branch": { "type": "string" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "displayName"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "User financial transaction record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "merchant": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "type": { "type": "string" },
+        "reference": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "userId", "merchant", "amount", "type"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "User transactions collection"
+    }
+  }
+}

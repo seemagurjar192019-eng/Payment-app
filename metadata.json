@@ -1,0 +1,6 @@
+{
+  "name": "PayZen - Premium Fintech Payment App",
+  "description": "A fully interactive, mobile-first fintech payment app with custom calculator, swipe-to-confirm, cards, recipients, and smooth Framer Motion animations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
