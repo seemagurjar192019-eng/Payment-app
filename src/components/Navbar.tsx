@@ -1,7 +1,7 @@
-import React from 'react';
-import { Home, CreditCard, Users, User, ArrowLeftRight } from 'lucide-react';
-import { ScreenType } from '../types';
-import { motion } from 'motion/react';
+import React from "react";
+import { Home, CreditCard, Users, User, ArrowLeftRight } from "lucide-react";
+import { ScreenType } from "../types";
+import { motion } from "motion/react";
 
 interface NavbarProps {
   currentScreen: ScreenType;
@@ -9,12 +9,20 @@ interface NavbarProps {
   onOpenSendMoney: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpenSendMoney }) => {
-  const navItems: { id: ScreenType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: 'recipients', label: 'Recipients', icon: Users },
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'cards', label: 'Cards', icon: CreditCard },
-    { id: 'profile', label: 'Profile', icon: User },
+export const Navbar: React.FC<NavbarProps> = ({
+  currentScreen,
+  onNavigate,
+  onOpenSendMoney,
+}) => {
+  const navItems: {
+    id: ScreenType;
+    label: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }[] = [
+    { id: "recipients", label: "Recipients", icon: Users },
+    { id: "home", label: "Home", icon: Home },
+    { id: "cards", label: "Cards", icon: CreditCard },
+    { id: "profile", label: "Profile", icon: User },
   ];
 
   return (
@@ -28,14 +36,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
               key={item.id}
               onClick={() => onNavigate(item.id)}
               className={`relative px-4 py-2 rounded-full flex items-center justify-center transition-colors duration-200 ${
-                isActive ? 'text-white' : 'text-gray-400 hover:text-gray-200'
+                isActive ? "text-white" : "text-gray-400 hover:text-gray-200"
               }`}
             >
               {isActive && (
                 <motion.div
                   layoutId="activePill"
                   className="absolute inset-0 bg-white/15 rounded-full shadow-inner"
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
               <Icon className="w-5 h-5 relative z-10" />

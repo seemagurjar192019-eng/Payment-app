@@ -21,11 +21,14 @@ export interface SimplifiedDebt {
 }
 
 export class SplitBillEngine {
-  static calculateEqualSplit(totalPaise: number, memberIds: string[]): Record<string, number> {
+  static calculateEqualSplit(
+    totalPaise: number,
+    memberIds: string[],
+  ): Record<string, number> {
     const count = memberIds.length;
     const baseShare = Math.floor(totalPaise / count);
     const remainder = totalPaise % count;
-    
+
     const shares: Record<string, number> = {};
     memberIds.forEach((id, index) => {
       shares[id] = baseShare + (index < remainder ? 1 : 0);
@@ -36,8 +39,9 @@ export class SplitBillEngine {
   static simplifyDebts(shares: ExpenseShare[]): SimplifiedDebt[] {
     const netBalances: Map<string, number> = new Map();
 
-    shares.forEach(s => {
-      const net = (netBalances.get(s.memberId) || 0) + (s.paidAmount - s.owedAmount);
+    shares.forEach((s) => {
+      const net =
+        (netBalances.get(s.memberId) || 0) + (s.paidAmount - s.owedAmount);
       netBalances.set(s.memberId, net);
     });
 

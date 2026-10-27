@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import type { User } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth, db, loginWithGoogle, logoutUser } from "./firebase";
-import { doc, getDoc, setDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+  onSnapshot,
+} from "firebase/firestore";
 
 export type BankAccountDetails = {
   bankName: string;
@@ -32,7 +39,7 @@ export function useFirebaseAccount() {
     ifsc: "SBIN0004521",
     branch: "Connaught Place, New Delhi",
     upiId: "naitik.gurjar@oksbi",
-    accountType: "Savings Account"
+    accountType: "Savings Account",
   };
 
   useEffect(() => {
@@ -46,20 +53,21 @@ export function useFirebaseAccount() {
           if (userSnap.exists()) {
             const data = userSnap.data();
             setProfile({
-              displayName: data.displayName || currentUser.displayName || "Naitik Gurjar",
+              displayName:
+                data.displayName || currentUser.displayName || "Naitik Gurjar",
               email: data.email || currentUser.email || "",
-              bankAccount: data.bankAccount || defaultBank
+              bankAccount: data.bankAccount || defaultBank,
             });
           } else {
             const initialProfile: AccountProfile = {
               displayName: currentUser.displayName || "Naitik Gurjar",
               email: currentUser.email || "",
-              bankAccount: defaultBank
+              bankAccount: defaultBank,
             };
             await setDoc(userDocRef, {
               uid: currentUser.uid,
               ...initialProfile,
-              createdAt: serverTimestamp()
+              createdAt: serverTimestamp(),
             });
             setProfile(initialProfile);
           }
@@ -108,7 +116,7 @@ export function useFirebaseAccount() {
     error,
     signIn,
     signOut: signOutUser,
-    defaultBank
+    defaultBank,
   };
 }
 

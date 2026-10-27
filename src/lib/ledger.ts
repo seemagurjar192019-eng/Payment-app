@@ -3,17 +3,18 @@
  * Append-only immutable double-entry ledger in paise.
  */
 
-export type AccountType = 'ASSET' | 'LIABILITY' | 'EQUITY' | 'REVENUE' | 'EXPENSE';
+export type AccountType =
+  "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE";
 
 export interface LedgerAccount {
   id: string;
   name: string;
   type: AccountType;
-  currency: 'INR';
+  currency: "INR";
   createdAt: string;
 }
 
-export type EntryDirection = 'DEBIT' | 'CREDIT';
+export type EntryDirection = "DEBIT" | "CREDIT";
 
 export interface LedgerEntry {
   id: string;
@@ -21,7 +22,7 @@ export interface LedgerEntry {
   accountId: string;
   direction: EntryDirection;
   amount: number; // Stored in lowest unit (Paise)
-  currency: 'INR';
+  currency: "INR";
   timestamp: string;
 }
 
@@ -39,9 +40,27 @@ export class LedgerEngine {
   private entries: LedgerEntry[] = [];
 
   constructor() {
-    this.registerAccount({ id: 'ACC_USER_WALLET', name: 'User Wallet', type: 'LIABILITY', currency: 'INR', createdAt: new Date().toISOString() });
-    this.registerAccount({ id: 'ACC_PAYZEN_ESCROW', name: 'PayZen Settlement Escrow', type: 'ASSET', currency: 'INR', createdAt: new Date().toISOString() });
-    this.registerAccount({ id: 'ACC_EXTERNAL_BANK', name: 'Nodal Bank Account', type: 'ASSET', currency: 'INR', createdAt: new Date().toISOString() });
+    this.registerAccount({
+      id: "ACC_USER_WALLET",
+      name: "User Wallet",
+      type: "LIABILITY",
+      currency: "INR",
+      createdAt: new Date().toISOString(),
+    });
+    this.registerAccount({
+      id: "ACC_PAYZEN_ESCROW",
+      name: "PayZen Settlement Escrow",
+      type: "ASSET",
+      currency: "INR",
+      createdAt: new Date().toISOString(),
+    });
+    this.registerAccount({
+      id: "ACC_EXTERNAL_BANK",
+      name: "Nodal Bank Account",
+      type: "ASSET",
+      currency: "INR",
+      createdAt: new Date().toISOString(),
+    });
   }
 
   public registerAccount(account: LedgerAccount): void {
@@ -54,7 +73,7 @@ export class LedgerEngine {
     referenceNo: string,
     debitAccountId: string,
     creditAccountId: string,
-    amountPaise: number
+    amountPaise: number,
   ): JournalTransaction {
     if (amountPaise <= 0) {
       throw new Error("LEDGER_ERROR: Amount must be strictly greater than 0");
@@ -67,24 +86,26 @@ export class LedgerEngine {
       id: `ENT_${Date.now()}_1`,
       transactionId: txId,
       accountId: debitAccountId,
-      direction: 'DEBIT',
+      direction: "DEBIT",
       amount: amountPaise,
-      currency: 'INR',
-      timestamp: now
+      currency: "INR",
+      timestamp: now,
     };
 
     const creditEntry: LedgerEntry = {
       id: `ENT_${Date.now()}_2`,
       transactionId: txId,
       accountId: creditAccountId,
-      direction: 'CREDIT',
+      direction: "CREDIT",
       amount: amountPaise,
-      currency: 'INR',
-      timestamp: now
+      currency: "INR",
+      timestamp: now,
     };
 
     if (debitEntry.amount !== creditEntry.amount) {
-      throw new Error("LEDGER_ERROR: Unbalanced transaction. Debits != Credits");
+      throw new Error(
+        "LEDGER_ERROR: Unbalanced transaction. Debits != Credits",
+      );
     }
 
     this.entries.push(debitEntry, creditEntry);
@@ -95,7 +116,7 @@ export class LedgerEngine {
       description,
       referenceNo,
       entries: [debitEntry, creditEntry],
-      timestamp: now
+      timestamp: now,
     };
   }
 
@@ -103,14 +124,16 @@ export class LedgerEngine {
     const account = this.accounts.get(accountId);
     if (!account) throw new Error("Account not found");
 
-    const accountEntries = this.entries.filter(e => e.accountId === accountId);
-    
+    const accountEntries = this.entries.filter(
+      (e) => e.accountId === accountId,
+    );
+
     let balance = 0;
     for (const entry of accountEntries) {
-      if (account.type === 'ASSET' || account.type === 'EXPENSE') {
-        balance += entry.direction === 'DEBIT' ? entry.amount : -entry.amount;
+      if (account.type === "ASSET" || account.type === "EXPENSE") {
+        balance += entry.direction === "DEBIT" ? entry.amount : -entry.amount;
       } else {
-        balance += entry.direction === 'CREDIT' ? entry.amount : -entry.amount;
+        balance += entry.direction === "CREDIT" ? entry.amount : -entry.amount;
       }
     }
     return balance;

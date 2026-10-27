@@ -2,19 +2,11 @@
 
 LOVABLE MASTER PROMPT — PREMIUM ANIMATED DUMMY PAYMENT APP
 
-
-
 Build a fully interactive, mobile-first fintech payment app called PayZen, using the uploaded reference video as the primary visual and animation reference. Recreate its overall UI/UX behavior, layout, transitions, and interaction flow as closely as practical, but use original PayZen branding.
-
-
 
 1. DESIGN DIRECTION
 
-
-
 Create a premium, modern fintech interface with:
-
-
 
 - A near-black and deep charcoal mobile dashboard.
 
@@ -28,19 +20,11 @@ Create a premium, modern fintech interface with:
 
 - A clean, light neutral background around the phone interface when viewed on desktop.
 
-
-
 Avoid a generic banking template, oversized marketing sections, excessive gradients, and unnecessary decorative elements. Prioritize the reference video's actual app interface.
-
-
 
 2. SCREENS AND NAVIGATION
 
-
-
 A. Home Dashboard
-
-
 
 - Small profile avatar and notification icon.
 
@@ -58,11 +42,7 @@ A. Home Dashboard
 
 - A small search/filter control inside the transaction panel.
 
-
-
 B. Digital Cards
-
-
 
 - Three vertically stacked, colorful digital cards.
 
@@ -74,11 +54,7 @@ B. Digital Cards
 
 - Card actions must remain simulated; never expose real card credentials.
 
-
-
 C. Recipients
-
-
 
 - A dark background with a title and Add button.
 
@@ -90,15 +66,9 @@ C. Recipients
 
 - Selecting a recipient opens the Send Money screen.
 
-
-
 D. Send Money — Custom Calculator
 
-
-
 Recreate the reference video's distinctive full-screen amount-entry interface:
-
-
 
 - White rounded sheet or full-height mobile panel.
 
@@ -120,15 +90,9 @@ Recreate the reference video's distinctive full-screen amount-entry interface:
 
 - A swipe-to-confirm interaction at the bottom.
 
-
-
 The amount must update live. Validate empty, zero, invalid, and insufficient demo balances. Never allow a transaction to create a negative balance.
 
-
-
 E. Payment Confirmation
-
-
 
 - Show recipient, amount, and a clear review step before confirmation.
 
@@ -138,15 +102,9 @@ E. Payment Confirmation
 
 - Prevent accidental duplicate submissions.
 
-
-
 F. Payment Success Animation
 
-
-
 Recreate the reference video's full-screen success state:
-
-
 
 - Full-screen bright green background.
 
@@ -164,15 +122,9 @@ Recreate the reference video's full-screen success state:
 
 - Refresh the dashboard balance and transaction history immediately.
 
-
-
 Clearly display “SIMULATION ONLY — NO REAL MONEY TRANSFERRED” on the transaction confirmation and success screens.
 
-
-
 G. Request Money
-
-
 
 - Select a fictional recipient.
 
@@ -182,15 +134,9 @@ G. Request Money
 
 - Allow cancellation and viewing of the request.
 
-
-
 3. ANIMATIONS AND MICRO-INTERACTIONS
 
-
-
 Use Framer Motion for polished, purposeful motion:
-
-
 
 - Smooth screen transitions with directional sliding.
 
@@ -214,15 +160,9 @@ Use Framer Motion for polished, purposeful motion:
 
 - Respect reduced-motion accessibility preferences.
 
-
-
 Animations must feel fluid and deliberate, not flashy or distracting. Keep the interface responsive and performant on mobile devices.
 
-
-
 4. FUNCTIONAL REQUIREMENTS
-
-
 
 - Every visible button, tab, card, icon, and navigation item must perform its intended demo action.
 
@@ -246,15 +186,9 @@ Animations must feel fluid and deliberate, not flashy or distracting. Keep the i
 
 - Use Lucide icons and original, consistent branding.
 
-
-
 5. STRICT PAYMENT SAFETY REQUIREMENTS
 
-
-
 This is a learning project only. It must not process, initiate, or claim to process real payments.
-
-
 
 - Do not connect to UPI, NPCI, bank accounts, payment gateways, cards, or real financial APIs.
 
@@ -268,27 +202,15 @@ This is a learning project only. It must not process, initiate, or claim to proc
 
 - Store only fictional demo state locally.
 
-
-
 6. IMPLEMENTATION INSTRUCTIONS
-
-
 
 Build the complete working application, not just a static mockup or screenshot. Implement all screens, shared state, interactions, transitions, and simulated payment logic.
 
-
-
 Start with the dashboard and complete the entire Send Money flow through the animated success screen. Then implement Cards, Recipients, Request Money, and Profile.
-
-
 
 Use the uploaded video as the reference for visual hierarchy, screen composition, and interaction timing. Preserve its compact mobile-app feel while ensuring the result is a coherent, usable PayZen product.
 
-
-
 Before finishing, test all navigation, keypad operations, amount validation, balance updates, transaction history, swipe confirmation, success animation, and persistence after refresh.
-
-
 
 Final goal: A visually polished, highly interactive fintech demo that captures the reference video's premium mobile UI and animation style without moving real money.
 

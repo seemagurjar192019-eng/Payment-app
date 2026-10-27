@@ -1,13 +1,13 @@
-import React from 'react';
-import { Recipient } from '../types';
-import { Check } from 'lucide-react';
-import { motion } from 'motion/react';
+import React from "react";
+import { Recipient } from "../types";
+import { Check } from "lucide-react";
+import { motion } from "motion/react";
 
 interface SuccessScreenProps {
   recipient: Recipient;
   amount: number;
   currencySymbol: string;
-  mode: 'send' | 'request';
+  mode: "send" | "request";
   reference: string;
   onClose: () => void;
 }
@@ -29,7 +29,9 @@ export const SuccessScreen: React.FC<SuccessScreenProps> = ({
       className="absolute inset-0 bg-[#10b981] z-50 flex flex-col items-center justify-between text-white p-8 cursor-pointer select-none"
     >
       <div className="pt-12 text-center">
-        <span className="text-xs uppercase tracking-widest font-semibold opacity-80">PayZen Secure</span>
+        <span className="text-xs uppercase tracking-widest font-semibold opacity-80">
+          PayZen Secure
+        </span>
       </div>
 
       <div className="flex flex-col items-center justify-center text-center">
@@ -37,7 +39,7 @@ export const SuccessScreen: React.FC<SuccessScreenProps> = ({
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
           className="w-24 h-24 rounded-full bg-white text-[#10b981] flex items-center justify-center shadow-2xl mb-6"
         >
           <Check className="w-12 h-12 stroke-[3]" />
@@ -49,7 +51,11 @@ export const SuccessScreen: React.FC<SuccessScreenProps> = ({
           transition={{ delay: 0.1 }}
           className="text-4xl font-extrabold tracking-tight mb-2"
         >
-          {currencySymbol}{amount.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+          {currencySymbol}
+          {amount.toLocaleString("en-IN", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          })}
         </motion.div>
 
         <motion.div
@@ -58,7 +64,9 @@ export const SuccessScreen: React.FC<SuccessScreenProps> = ({
           transition={{ delay: 0.2 }}
           className="text-lg font-semibold opacity-90 mb-4"
         >
-          {mode === 'send' ? `Sent to ${recipient.name}` : `Requested from ${recipient.name}`}
+          {mode === "send"
+            ? `Sent to ${recipient.name}`
+            : `Requested from ${recipient.name}`}
         </motion.div>
 
         <motion.div

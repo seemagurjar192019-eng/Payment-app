@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Recipient } from '../../types';
-import { X, QrCode, Camera, Sparkles, Check, ArrowRight } from 'lucide-react';
-import { motion } from 'motion/react';
-import { UpiParser } from '@/lib/upi-qr';
+import React, { useState } from "react";
+import { Recipient } from "../../types";
+import { X, QrCode, Camera, Sparkles, Check, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { UpiParser } from "@/lib/upi-qr";
 
 interface QrScannerModalProps {
   recipients: Recipient[];
@@ -15,9 +15,9 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
   onSelectRecipient,
   onClose,
 }) => {
-  const [tab, setTab] = useState<'scan' | 'myqr'>('scan');
+  const [tab, setTab] = useState<"scan" | "myqr">("scan");
   const [scanning, setScanning] = useState(false);
-  const [manualUri, setManualUri] = useState('');
+  const [manualUri, setManualUri] = useState("");
   const [parseError, setParseError] = useState<string | null>(null);
 
   const simulateScan = (rec: Recipient) => {
@@ -33,24 +33,27 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     setParseError(null);
     try {
       const parsed = UpiParser.parse(manualUri);
-      const matchedRecipient: Recipient = recipients.find(r => r.handle.includes(parsed.pa)) || {
+      const matchedRecipient: Recipient = recipients.find((r) =>
+        r.handle.includes(parsed.pa),
+      ) || {
         id: `upi_${Date.now()}`,
         name: parsed.pn,
         handle: parsed.pa,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        hue: 120
+        avatar:
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+        hue: 120,
       };
       onSelectRecipient(matchedRecipient);
-    } catch (err: any) {
-      setParseError(err.message || 'Invalid NPCI UPI QR string');
+    } catch (err: unknown) {
+      setParseError((err as Error).message || "Invalid NPCI UPI QR string");
     }
   };
 
   const myUpiPayload = UpiParser.generatePayload({
-    pa: 'payzen.user@okhdfcbank',
-    pn: 'PayZen User',
-    cu: 'INR',
-    tn: 'Instant payment via PayZen sandbox'
+    pa: "payzen.user@okhdfcbank",
+    pn: "PayZen User",
+    cu: "INR",
+    tn: "Instant payment via PayZen sandbox",
   });
 
   return (
@@ -63,17 +66,21 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
       <div className="flex justify-between items-center mb-6">
         <div className="flex bg-white/10 p-1 rounded-full mx-auto">
           <button
-            onClick={() => setTab('scan')}
+            onClick={() => setTab("scan")}
             className={`px-4 py-1.5 rounded-full text-xs font-semibold transition ${
-              tab === 'scan' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-400 hover:text-white'
+              tab === "scan"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-400 hover:text-white"
             }`}
           >
             Scan UPI QR
           </button>
           <button
-            onClick={() => setTab('myqr')}
+            onClick={() => setTab("myqr")}
             className={`px-4 py-1.5 rounded-full text-xs font-semibold transition ${
-              tab === 'myqr' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-400 hover:text-white'
+              tab === "myqr"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-400 hover:text-white"
             }`}
           >
             My QR Code
@@ -87,7 +94,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
         </button>
       </div>
 
-      {tab === 'scan' ? (
+      {tab === "scan" ? (
         <div className="flex-1 flex flex-col items-center justify-center">
           <div className="relative w-64 h-64 border-2 border-dashed border-emerald-400/60 rounded-3xl flex items-center justify-center overflow-hidden bg-black/40 shadow-2xl">
             {scanning ? (
@@ -98,7 +105,9 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
                 <Camera className="w-12 h-12 text-emerald-400 mb-2 animate-bounce" />
-                <span className="text-xs text-gray-400 mb-2">Align NPCI BharatQR / UPI code within frame</span>
+                <span className="text-xs text-gray-400 mb-2">
+                  Align NPCI BharatQR / UPI code within frame
+                </span>
               </div>
             )}
           </div>
@@ -110,7 +119,9 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
           )}
 
           <div className="w-full mt-6">
-            <div className="text-xs font-semibold text-gray-400 mb-2">Quick Simulated QR Scan:</div>
+            <div className="text-xs font-semibold text-gray-400 mb-2">
+              Quick Simulated QR Scan:
+            </div>
             <div className="grid grid-cols-3 gap-2">
               {recipients.slice(0, 3).map((rec) => (
                 <button
@@ -118,8 +129,14 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                   onClick={() => simulateScan(rec)}
                   className="bg-white/5 hover:bg-white/10 border border-white/10 p-2.5 rounded-2xl flex flex-col items-center gap-1.5 transition active:scale-95"
                 >
-                  <img src={rec.avatar} alt={rec.name} className="w-10 h-10 rounded-full object-cover" />
-                  <span className="text-xs font-medium truncate w-full text-center">{rec.name}</span>
+                  <img
+                    src={rec.avatar}
+                    alt={rec.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <span className="text-xs font-medium truncate w-full text-center">
+                    {rec.name}
+                  </span>
                 </button>
               ))}
             </div>
@@ -134,7 +151,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                   <div
                     key={i}
                     className={`rounded-xs ${
-                      (i + (i % 3)) % 2 === 0 ? 'bg-white' : 'bg-gray-800'
+                      (i + (i % 3)) % 2 === 0 ? "bg-white" : "bg-gray-800"
                     }`}
                   />
                 ))}
@@ -142,9 +159,12 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             </div>
           </div>
           <h3 className="text-lg font-bold">PayZen User</h3>
-          <p className="text-xs text-emerald-400 font-mono mt-1">payzen.user@okhdfcbank</p>
+          <p className="text-xs text-emerald-400 font-mono mt-1">
+            payzen.user@okhdfcbank
+          </p>
           <p className="text-[11px] text-gray-400 mt-2 max-w-xs">
-            Scan this NPCI compliant BharatQR to receive instant simulated payments.
+            Scan this NPCI compliant BharatQR to receive instant simulated
+            payments.
           </p>
         </div>
       )}

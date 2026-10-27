@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { DigitalCard } from '../types';
-import { Plus, Snowflake, Settings, CreditCard, Check, Sparkles } from 'lucide-react';
-import { motion } from 'motion/react';
+import React, { useState } from "react";
+import { DigitalCard } from "../types";
+import {
+  Plus,
+  Snowflake,
+  Settings,
+  CreditCard,
+  Check,
+  Sparkles,
+} from "lucide-react";
+import { motion } from "motion/react";
 
 interface CardsScreenProps {
   cards: DigitalCard[];
@@ -10,14 +17,19 @@ interface CardsScreenProps {
   onAddCard: () => void;
 }
 
-export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol, onUpdateCard, onAddCard }) => {
+export const CardsScreen: React.FC<CardsScreenProps> = ({
+  cards,
+  currencySymbol,
+  onUpdateCard,
+  onAddCard,
+}) => {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   const toggleFreeze = (card: DigitalCard, e: React.MouseEvent) => {
     e.stopPropagation();
     onUpdateCard({
       ...card,
-      isFrozen: !card.isFrozen
+      isFrozen: !card.isFrozen,
     });
   };
 
@@ -27,7 +39,9 @@ export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol,
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-xl font-bold text-white tracking-tight">Cards</h2>
-          <p className="text-xs text-gray-400">Manage virtual & physical assets</p>
+          <p className="text-xs text-gray-400">
+            Manage virtual & physical assets
+          </p>
         </div>
         <button
           onClick={onAddCard}
@@ -41,21 +55,27 @@ export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol,
       {/* Stacked Cards */}
       <div className="space-y-4">
         {cards.map((card, index) => {
-          const bgGradient = {
-            yellow: 'bg-gradient-to-br from-yellow-300 via-amber-300 to-amber-500 text-gray-900',
-            turquoise: 'bg-gradient-to-br from-teal-300 via-teal-400 to-cyan-600 text-gray-900',
-            blue: 'bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 text-white',
-            purple: 'bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-600 text-white'
-          }[card.color] || 'bg-yellow-300 text-gray-900';
+          const bgGradient =
+            {
+              yellow:
+                "bg-gradient-to-br from-yellow-300 via-amber-300 to-amber-500 text-gray-900",
+              turquoise:
+                "bg-gradient-to-br from-teal-300 via-teal-400 to-cyan-600 text-gray-900",
+              blue: "bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 text-white",
+              purple:
+                "bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-600 text-white",
+            }[card.color] || "bg-yellow-300 text-gray-900";
 
           return (
             <motion.div
               key={card.id}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedCardId(selectedCardId === card.id ? null : card.id)}
+              onClick={() =>
+                setSelectedCardId(selectedCardId === card.id ? null : card.id)
+              }
               className={`relative rounded-3xl p-6 shadow-xl transition-all border border-white/20 overflow-hidden ${bgGradient} ${
-                card.isFrozen ? 'opacity-60 grayscale' : ''
+                card.isFrozen ? "opacity-60 grayscale" : ""
               }`}
             >
               {/* Card Background Glow / Pattern */}
@@ -63,7 +83,9 @@ export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol,
 
               <div className="flex justify-between items-start mb-8">
                 <div>
-                  <div className="text-xs font-semibold opacity-75 uppercase tracking-wider">Digital card</div>
+                  <div className="text-xs font-semibold opacity-75 uppercase tracking-wider">
+                    Digital card
+                  </div>
                   <div className="text-lg font-bold">{card.name}</div>
                 </div>
                 <div className="w-10 h-8 rounded-lg bg-black/20 flex items-center justify-center text-xs font-mono font-bold tracking-widest">
@@ -74,7 +96,10 @@ export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol,
               <div className="mb-6">
                 <div className="text-xs opacity-75 mb-0.5">Card balance</div>
                 <div className="text-2xl font-bold tracking-tight">
-                  {currencySymbol}{card.balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                  {currencySymbol}
+                  {card.balance.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                  })}
                 </div>
               </div>
 
@@ -87,9 +112,11 @@ export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol,
                   <button
                     onClick={(e) => toggleFreeze(card, e)}
                     className={`p-2 rounded-full transition ${
-                      card.isFrozen ? 'bg-red-500 text-white' : 'bg-black/10 hover:bg-black/20'
+                      card.isFrozen
+                        ? "bg-red-500 text-white"
+                        : "bg-black/10 hover:bg-black/20"
                     }`}
-                    title={card.isFrozen ? 'Unfreeze Card' : 'Freeze Card'}
+                    title={card.isFrozen ? "Unfreeze Card" : "Freeze Card"}
                   >
                     <Snowflake className="w-4 h-4" />
                   </button>
@@ -117,7 +144,8 @@ export const CardsScreen: React.FC<CardsScreenProps> = ({ cards, currencySymbol,
           <Sparkles className="w-4 h-4 text-amber-400" />
           <span>PayZen Security Vault</span>
         </div>
-        Your digital cards are protected with hardware-level encryption. Tap the snowflake icon to instantly freeze or unfreeze any card.
+        Your digital cards are protected with hardware-level encryption. Tap the
+        snowflake icon to instantly freeze or unfreeze any card.
       </div>
     </div>
   );

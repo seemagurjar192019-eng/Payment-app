@@ -1,5 +1,14 @@
-import React from 'react';
-import { User, Shield, Globe, RefreshCw, LogOut, Check, Sparkles, Smartphone } from 'lucide-react';
+import React from "react";
+import {
+  User,
+  Shield,
+  Globe,
+  RefreshCw,
+  LogOut,
+  Check,
+  Sparkles,
+  Smartphone,
+} from "lucide-react";
 
 interface ProfileScreenProps {
   currencySymbol: string;
@@ -16,7 +25,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
     <div className="flex flex-col flex-1 px-5 pt-3 pb-24">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-white tracking-tight">Profile & Settings</h2>
+        <h2 className="text-xl font-bold text-white tracking-tight">
+          Profile & Settings
+        </h2>
         <p className="text-xs text-gray-400">PayZen Demo Environment</p>
       </div>
 
@@ -46,14 +57,16 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             </div>
             <div>
               <div className="text-sm font-semibold text-white">Currency</div>
-              <div className="text-xs text-gray-400">Current: {currencySymbol === '₹' ? 'INR (₹)' : 'USD ($)'}</div>
+              <div className="text-xs text-gray-400">
+                Current: {currencySymbol === "₹" ? "INR (₹)" : "USD ($)"}
+              </div>
             </div>
           </div>
           <button
-            onClick={() => onToggleCurrency(currencySymbol === '₹' ? '$' : '₹')}
+            onClick={() => onToggleCurrency(currencySymbol === "₹" ? "$" : "₹")}
             className="bg-white/10 hover:bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition"
           >
-            Switch to {currencySymbol === '₹' ? 'USD ($)' : 'INR (₹)'}
+            Switch to {currencySymbol === "₹" ? "USD ($)" : "INR (₹)"}
           </button>
         </div>
 
@@ -64,7 +77,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               <Shield className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-white">Sandbox Mode</div>
+              <div className="text-sm font-semibold text-white">
+                Sandbox Mode
+              </div>
               <div className="text-xs text-gray-400">Zero real money risk</div>
             </div>
           </div>
@@ -80,8 +95,12 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               <RefreshCw className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-white">Reset Demo Data</div>
-              <div className="text-xs text-gray-400">Restore default balance & txns</div>
+              <div className="text-sm font-semibold text-white">
+                Reset Demo Data
+              </div>
+              <div className="text-xs text-gray-400">
+                Restore default balance & txns
+              </div>
             </div>
           </div>
           <button

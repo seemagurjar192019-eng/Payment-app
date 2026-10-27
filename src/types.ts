@@ -1,4 +1,4 @@
-export type ScreenType = 'home' | 'cards' | 'recipients' | 'profile';
+export type ScreenType = "home" | "cards" | "recipients" | "profile";
 
 export interface Transaction {
   id: string;
@@ -9,18 +9,18 @@ export interface Transaction {
   avatar?: string;
   iconBg?: string;
   reference?: string;
-  status?: 'completed' | 'pending' | 'cancelled';
-  type: 'send' | 'receive' | 'request';
+  status?: "completed" | "pending" | "cancelled";
+  type: "send" | "receive" | "request";
   recipientName?: string;
 }
 
 export interface DigitalCard {
   id: string;
   name: string;
-  type: 'Digital' | 'Virtual' | 'Metal';
+  type: "Digital" | "Virtual" | "Metal";
   last4: string;
   balance: number;
-  color: 'yellow' | 'turquoise' | 'blue' | 'purple';
+  color: "yellow" | "turquoise" | "blue" | "purple";
   isFrozen: boolean;
   expiry: string;
 }
@@ -41,5 +41,5 @@ export interface PaymentRequest {
   avatar: string;
   amount: number;
   date: string;
-  status: 'pending' | 'completed' | 'cancelled';
+  status: "pending" | "completed" | "cancelled";
 }

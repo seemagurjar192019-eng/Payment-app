@@ -4,8 +4,10 @@
 
 export class BiometricAuth {
   public static async isAvailable(): Promise<boolean> {
-    if (window.PublicKeyCredential && 
-        PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
+    if (
+      window.PublicKeyCredential &&
+      PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable
+    ) {
       return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
     }
     return false;
@@ -17,7 +19,7 @@ export class BiometricAuth {
       const challenge = new Uint8Array(32);
       window.crypto.getRandomValues(challenge);
       // Simulated biometric confirmation for sandbox demo
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise((r) => setTimeout(r, 600));
       return true;
     } catch {
       return false;

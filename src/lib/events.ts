@@ -2,11 +2,11 @@
  * Module 10: In-App Notification & Audit Event Bus
  */
 
-export type PayZenEventType = 
-  | 'TRANSACTION_SUCCESS' 
-  | 'TRANSACTION_FAILED' 
-  | 'LIMIT_WARNING' 
-  | 'SECURITY_PIN_LOCKED';
+export type PayZenEventType =
+  | "TRANSACTION_SUCCESS"
+  | "TRANSACTION_FAILED"
+  | "LIMIT_WARNING"
+  | "SECURITY_PIN_LOCKED";
 
 export interface PayZenNotification {
   id: string;
@@ -15,7 +15,7 @@ export interface PayZenNotification {
   message: string;
   timestamp: string;
   read: boolean;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export class NotificationBus {
@@ -30,14 +30,21 @@ export class NotificationBus {
     return this.instance;
   }
 
-  public subscribe(callback: (notification: PayZenNotification) => void): () => void {
+  public subscribe(
+    callback: (notification: PayZenNotification) => void,
+  ): () => void {
     this.listeners.push(callback);
     return () => {
-      this.listeners = this.listeners.filter(l => l !== callback);
+      this.listeners = this.listeners.filter((l) => l !== callback);
     };
   }
 
-  public publish(type: PayZenEventType, title: string, message: string, metadata?: Record<string, any>): void {
+  public publish(
+    type: PayZenEventType,
+    title: string,
+    message: string,
+    metadata?: Record<string, unknown>,
+  ): void {
     const notification: PayZenNotification = {
       id: `NOTIF_${Date.now()}`,
       type,
@@ -45,11 +52,11 @@ export class NotificationBus {
       message,
       timestamp: new Date().toISOString(),
       read: false,
-      metadata
+      ...(metadata ? { metadata } : {}),
     };
 
     this.history.unshift(notification);
-    this.listeners.forEach(fn => fn(notification));
+    this.listeners.forEach((fn) => fn(notification));
   }
 
   public getHistory(): PayZenNotification[] {

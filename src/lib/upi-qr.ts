@@ -3,15 +3,15 @@
  */
 
 export interface ParsedUPI {
-  pa: string;        // Payee VPA
-  pn: string;        // Payee Legal Name
-  am?: number;       // Fixed Amount
-  cu: 'INR';         // Currency
-  mc?: string;       // Merchant Category Code
-  tr?: string;       // Transaction Reference ID
-  tn?: string;       // Transaction Note
-  mid?: string;      // Merchant ID
-  sign?: string;     // Digital signature
+  pa: string; // Payee VPA
+  pn: string; // Payee Legal Name
+  am?: number; // Fixed Amount
+  cu: "INR"; // Currency
+  mc?: string; // Merchant Category Code
+  tr?: string; // Transaction Reference ID
+  tn?: string; // Transaction Note
+  mid?: string; // Merchant ID
+  sign?: string; // Digital signature
 }
 
 export class UpiParser {
@@ -33,7 +33,8 @@ export class UpiParser {
 
     if (!pa) throw new Error("MALFORMED_UPI: Missing payee address (pa)");
     if (!pn) throw new Error("MALFORMED_UPI: Missing payee name (pn)");
-    if (!this.isValidVpa(pa)) throw new Error("INVALID_VPA: Malformed UPI ID syntax");
+    if (!this.isValidVpa(pa))
+      throw new Error("INVALID_VPA: Malformed UPI ID syntax");
 
     const rawAmount = params.get("am");
     const parsedAmount = rawAmount ? parseFloat(rawAmount) : undefined;
@@ -41,13 +42,16 @@ export class UpiParser {
     return {
       pa: decodeURIComponent(pa),
       pn: decodeURIComponent(pn),
-      am: parsedAmount && !isNaN(parsedAmount) && parsedAmount > 0 ? parsedAmount : undefined,
-      cu: 'INR',
+      am:
+        parsedAmount && !isNaN(parsedAmount) && parsedAmount > 0
+          ? parsedAmount
+          : undefined,
+      cu: "INR",
       mc: params.get("mc") || undefined,
       tr: params.get("tr") || undefined,
       tn: params.get("tn") ? decodeURIComponent(params.get("tn")!) : undefined,
       mid: params.get("mid") || undefined,
-      sign: params.get("sign") || undefined
+      sign: params.get("sign") || undefined,
     };
   }
 

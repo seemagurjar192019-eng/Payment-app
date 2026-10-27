@@ -1,36 +1,41 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Zap, Smartphone, ArrowRight } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Shield, Zap, Smartphone, ArrowRight } from "lucide-react";
 
 interface OnboardingModalProps {
   onComplete: () => void;
 }
 
-export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onComplete }) => {
+export const OnboardingModal: React.FC<OnboardingModalProps> = ({
+  onComplete,
+}) => {
   const [step, setStep] = useState(0);
 
   const slides = [
     {
-      title: 'Welcome to PayZen',
-      subtitle: 'The next-generation fintech experience designed for speed, security, and simplicity.',
+      title: "Welcome to PayZen",
+      subtitle:
+        "The next-generation fintech experience designed for speed, security, and simplicity.",
       icon: Zap,
-      bg: 'from-amber-400 to-orange-500'
+      bg: "from-amber-400 to-orange-500",
     },
     {
-      title: 'Instant Secure Transfers',
-      subtitle: 'Send and request money with custom calculator logic, split bills, and instant QR scanning.',
+      title: "Instant Secure Transfers",
+      subtitle:
+        "Send and request money with custom calculator logic, split bills, and instant QR scanning.",
       icon: Smartphone,
-      bg: 'from-cyan-400 to-blue-600'
+      bg: "from-cyan-400 to-blue-600",
     },
     {
-      title: 'Bank-Grade Protection',
-      subtitle: 'Secured with 4-digit PIN lock, SHA-256 encryption, and daily spending limits.',
+      title: "Bank-Grade Protection",
+      subtitle:
+        "Secured with 4-digit PIN lock, SHA-256 encryption, and daily spending limits.",
       icon: Shield,
-      bg: 'from-emerald-400 to-teal-600'
-    }
+      bg: "from-emerald-400 to-teal-600",
+    },
   ];
 
-  const currentSlide = slides[step];
+  const currentSlide = slides[step]!;
   const Icon = currentSlide.icon;
 
   const handleNext = () => {
@@ -89,7 +94,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onComplete }) 
             <div
               key={idx}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                step === idx ? 'w-8 bg-white' : 'w-2 bg-white/20'
+                step === idx ? "w-8 bg-white" : "w-2 bg-white/20"
               }`}
             />
           ))}
@@ -99,7 +104,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ onComplete }) 
           onClick={handleNext}
           className="w-full bg-white text-gray-900 font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-gray-100 transition shadow-lg active:scale-98"
         >
-          <span>{step === slides.length - 1 ? 'Get Started' : 'Continue'}</span>
+          <span>{step === slides.length - 1 ? "Get Started" : "Continue"}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

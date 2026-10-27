@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
-import { Recipient } from '../types';
-import { X, Delete, ChevronDown, ArrowRight, ShieldCheck, Check } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from "react";
+import { Recipient } from "../types";
+import {
+  X,
+  Delete,
+  ChevronDown,
+  ArrowRight,
+  ShieldCheck,
+  Check,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 interface SendMoneyModalProps {
   recipients: Recipient[];
   initialRecipient?: Recipient;
   balance: number;
   currencySymbol: string;
-  initialMode?: 'send' | 'request';
+  initialMode?: "send" | "request";
   onClose: () => void;
-  onExecutePayment: (recipient: Recipient, amount: number, mode: 'send' | 'request') => void;
+  onExecutePayment: (
+    recipient: Recipient,
+    amount: number,
+    mode: "send" | "request",
+  ) => void;
 }
 
 export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
@@ -18,22 +29,24 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
   initialRecipient,
   balance,
   currencySymbol,
-  initialMode = 'send',
+  initialMode = "send",
   onClose,
   onExecutePayment,
 }) => {
-  const [mode, setMode] = useState<'send' | 'request'>(initialMode);
+  const [mode, setMode] = useState<"send" | "request">(initialMode);
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient>(
-    initialRecipient || recipients[0] || {
-      id: 'default',
-      name: 'Pavlo',
-      handle: '@pavlo',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      bankInfo: 'Vault 7642'
-    }
+    initialRecipient ||
+      recipients[0] || {
+        id: "default",
+        name: "Pavlo",
+        handle: "@pavlo",
+        avatar:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+        bankInfo: "Vault 7642",
+      },
   );
 
-  const [displayExpression, setDisplayExpression] = useState('0');
+  const [displayExpression, setDisplayExpression] = useState("0");
   const [operator, setOperator] = useState<string | null>(null);
   const [prevValue, setPrevValue] = useState<number | null>(null);
   const [isCalculated, setIsCalculated] = useState(false);
@@ -47,10 +60,14 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
       if (operator && prevValue !== null) {
         const currentNum = parseFloat(displayExpression) || 0;
         switch (operator) {
-          case '+': return prevValue + currentNum;
-          case '-': return prevValue - currentNum;
-          case '×': return prevValue * currentNum;
-          case '÷': return currentNum !== 0 ? prevValue / currentNum : prevValue;
+          case "+":
+            return prevValue + currentNum;
+          case "-":
+            return prevValue - currentNum;
+          case "×":
+            return prevValue * currentNum;
+          case "÷":
+            return currentNum !== 0 ? prevValue / currentNum : prevValue;
         }
       }
       return parseFloat(displayExpression) || 0;
@@ -63,12 +80,12 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
 
   const handleKeyPress = (char: string) => {
     setErrorMsg(null);
-    if (char === '.' && displayExpression.includes('.')) return;
+    if (char === "." && displayExpression.includes(".")) return;
 
-    if (displayExpression === '0' && char !== '.') {
+    if (displayExpression === "0" && char !== ".") {
       setDisplayExpression(char);
     } else {
-      setDisplayExpression(prev => prev + char);
+      setDisplayExpression((prev) => prev + char);
     }
   };
 
@@ -76,24 +93,24 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
     const currentNum = parseFloat(displayExpression) || 0;
     setPrevValue(currentNum);
     setOperator(op);
-    setDisplayExpression('0');
+    setDisplayExpression("0");
   };
 
   const handleDelete = () => {
     if (displayExpression.length > 1) {
-      setDisplayExpression(prev => prev.slice(0, -1));
+      setDisplayExpression((prev) => prev.slice(0, -1));
     } else {
-      setDisplayExpression('0');
+      setDisplayExpression("0");
     }
   };
 
   const handleConfirm = () => {
     if (finalAmount <= 0) {
-      setErrorMsg('Please enter a valid amount greater than 0');
+      setErrorMsg("Please enter a valid amount greater than 0");
       return;
     }
-    if (mode === 'send' && finalAmount > balance) {
-      setErrorMsg('Insufficient demo balance');
+    if (mode === "send" && finalAmount > balance) {
+      setErrorMsg("Insufficient demo balance");
       return;
     }
     onExecutePayment(selectedRecipient, finalAmount, mode);
@@ -101,33 +118,42 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
 
   return (
     <motion.div
-      initial={{ y: '100%' }}
+      initial={{ y: "100%" }}
       animate={{ y: 0 }}
-      exit={{ y: '100%' }}
-      transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+      exit={{ y: "100%" }}
+      transition={{ type: "spring", damping: 25, stiffness: 300 }}
       className="absolute inset-0 bg-[#0e0f12] text-gray-900 z-50 flex flex-col overflow-hidden rounded-t-[36px]"
     >
       {/* Top Sheet Container */}
       <div className="bg-white rounded-t-[36px] flex-1 flex flex-col pt-4 px-6 pb-8 shadow-2xl overflow-y-auto">
-        
         {/* Drag Handle / Close Header */}
         <div className="flex justify-between items-center mb-4">
           <div className="w-10 h-1 bg-gray-300 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3"></div>
-          
+
           {/* Tabs: Send / Request */}
           <div className="flex bg-gray-100 p-1 rounded-full mx-auto">
             <button
-              onClick={() => { setMode('send'); setErrorMsg(null); }}
+              onClick={() => {
+                setMode("send");
+                setErrorMsg(null);
+              }}
               className={`px-5 py-1.5 rounded-full text-xs font-semibold transition ${
-                mode === 'send' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+                mode === "send"
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-500 hover:text-gray-900"
               }`}
             >
               Send
             </button>
             <button
-              onClick={() => { setMode('request'); setErrorMsg(null); }}
+              onClick={() => {
+                setMode("request");
+                setErrorMsg(null);
+              }}
               className={`px-5 py-1.5 rounded-full text-xs font-semibold transition ${
-                mode === 'request' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+                mode === "request"
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-500 hover:text-gray-900"
               }`}
             >
               Request
@@ -144,8 +170,12 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
 
         {/* Selected Recipient info */}
         <div className="flex justify-center items-center gap-2 mb-6">
-          <span className="text-xs font-semibold text-gray-600">{selectedRecipient.name}</span>
-          <span className="text-xs text-gray-400">• {selectedRecipient.bankInfo}</span>
+          <span className="text-xs font-semibold text-gray-600">
+            {selectedRecipient.name}
+          </span>
+          <span className="text-xs text-gray-400">
+            • {selectedRecipient.bankInfo}
+          </span>
           <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
         </div>
 
@@ -153,7 +183,11 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
         <div className="flex flex-col items-center justify-center my-4 relative">
           <div className="flex items-center gap-3">
             <span className="text-4xl font-extrabold text-gray-900 tracking-tight">
-              {currencySymbol}{finalAmount.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+              {currencySymbol}
+              {finalAmount.toLocaleString("en-IN", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })}
             </span>
             <img
               src={selectedRecipient.avatar}
@@ -169,7 +203,8 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
           )}
 
           <div className="text-xs text-gray-500 mt-2 font-medium">
-            Available {currencySymbol}{balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            Available {currencySymbol}
+            {balance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
           </div>
 
           {errorMsg && (
@@ -185,7 +220,7 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
 
         {/* Calculator Operations Row */}
         <div className="grid grid-cols-4 gap-2 mb-4 max-w-xs mx-auto w-full">
-          {['+', '-', '×', '÷'].map((op) => (
+          {["+", "-", "×", "÷"].map((op) => (
             <button
               key={op}
               onClick={() => handleOperator(op)}
@@ -198,15 +233,17 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
 
         {/* Custom Numeric Keypad */}
         <div className="grid grid-cols-3 gap-2.5 max-w-xs mx-auto w-full mb-6">
-          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0'].map((num) => (
-            <button
-              key={num}
-              onClick={() => handleKeyPress(num)}
-              className="h-12 rounded-2xl bg-gray-50 hover:bg-gray-100 text-gray-900 font-bold text-lg flex items-center justify-center transition active:scale-95 shadow-xs"
-            >
-              {num}
-            </button>
-          ))}
+          {["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0"].map(
+            (num) => (
+              <button
+                key={num}
+                onClick={() => handleKeyPress(num)}
+                className="h-12 rounded-2xl bg-gray-50 hover:bg-gray-100 text-gray-900 font-bold text-lg flex items-center justify-center transition active:scale-95 shadow-xs"
+              >
+                {num}
+              </button>
+            ),
+          )}
           <button
             onClick={handleDelete}
             className="h-12 rounded-2xl bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold text-base flex items-center justify-center transition active:scale-95 shadow-xs"
@@ -247,7 +284,6 @@ export const SendMoneyModal: React.FC<SendMoneyModalProps> = ({
             <span>Simulation Only — Secure Encrypted Channel</span>
           </div>
         </div>
-
       </div>
     </motion.div>
   );

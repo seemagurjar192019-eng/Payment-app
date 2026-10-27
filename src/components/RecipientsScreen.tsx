@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Recipient } from '../types';
-import { Search, Plus, UserPlus, Check, Star, ArrowRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import React, { useState } from "react";
+import { Recipient } from "../types";
+import { Search, Plus, UserPlus, Check, Star, ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
 
 interface RecipientsScreenProps {
   recipients: Recipient[];
@@ -14,15 +14,15 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
   onSelectRecipient,
   onAddRecipient,
 }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newName, setNewName] = useState('');
-  const [newHandle, setNewHandle] = useState('');
+  const [newName, setNewName] = useState("");
+  const [newHandle, setNewHandle] = useState("");
 
   const filteredRecipients = recipients.filter(
     (r) =>
       r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      r.handle.toLowerCase().includes(searchQuery.toLowerCase())
+      r.handle.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const handleCreate = (e: React.FormEvent) => {
@@ -31,14 +31,16 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
     const newRec: Recipient = {
       id: `rec-${Date.now()}`,
       name: newName,
-      handle: newHandle.startsWith('@') ? newHandle : `@${newHandle || newName.toLowerCase().replace(/\s+/g, '')}`,
+      handle: newHandle.startsWith("@")
+        ? newHandle
+        : `@${newHandle || newName.toLowerCase().replace(/\s+/g, "")}`,
       avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 999999)}?w=150&auto=format&fit=crop&q=80`,
-      bankInfo: 'PayZen Instant 4921',
+      bankInfo: "PayZen Instant 4921",
       isFavorite: false,
     };
     onAddRecipient(newRec);
-    setNewName('');
-    setNewHandle('');
+    setNewName("");
+    setNewHandle("");
     setShowAddModal(false);
   };
 
@@ -47,7 +49,9 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight">Recipients</h2>
+          <h2 className="text-xl font-bold text-white tracking-tight">
+            Recipients
+          </h2>
           <p className="text-xs text-gray-400">Send & request instantly</p>
         </div>
         <button
@@ -61,28 +65,34 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
 
       {/* Favorites / Quick Grid */}
       <div className="mb-6">
-        <div className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wider">Favorites</div>
+        <div className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wider">
+          Favorites
+        </div>
         <div className="grid grid-cols-4 gap-3">
-          {recipients.filter(r => r.isFavorite).map((rec) => (
-            <motion.div
-              key={rec.id}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onSelectRecipient(rec)}
-              className="flex flex-col items-center cursor-pointer group"
-            >
-              <div className="relative mb-1">
-                <img
-                  src={rec.avatar}
-                  alt={rec.name}
-                  className="w-14 h-14 rounded-full object-cover border-2 border-white/20 group-hover:border-emerald-400 transition"
-                />
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-[#0e0f12] flex items-center justify-center text-[10px] text-white">
-                  ✓
+          {recipients
+            .filter((r) => r.isFavorite)
+            .map((rec) => (
+              <motion.div
+                key={rec.id}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => onSelectRecipient(rec)}
+                className="flex flex-col items-center cursor-pointer group"
+              >
+                <div className="relative mb-1">
+                  <img
+                    src={rec.avatar}
+                    alt={rec.name}
+                    className="w-14 h-14 rounded-full object-cover border-2 border-white/20 group-hover:border-emerald-400 transition"
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-[#0e0f12] flex items-center justify-center text-[10px] text-white">
+                    ✓
+                  </div>
                 </div>
-              </div>
-              <span className="text-xs font-medium text-white truncate w-full text-center">{rec.name}</span>
-            </motion.div>
-          ))}
+                <span className="text-xs font-medium text-white truncate w-full text-center">
+                  {rec.name}
+                </span>
+              </motion.div>
+            ))}
         </div>
       </div>
 
@@ -107,9 +117,15 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
               className="flex items-center justify-between p-3 rounded-2xl hover:bg-gray-50 transition cursor-pointer border border-transparent hover:border-gray-100"
             >
               <div className="flex items-center gap-3">
-                <img src={rec.avatar} alt={rec.name} className="w-11 h-11 rounded-full object-cover" />
+                <img
+                  src={rec.avatar}
+                  alt={rec.name}
+                  className="w-11 h-11 rounded-full object-cover"
+                />
                 <div>
-                  <div className="text-sm font-semibold text-gray-900">{rec.name}</div>
+                  <div className="text-sm font-semibold text-gray-900">
+                    {rec.name}
+                  </div>
                   <div className="text-xs text-gray-500">{rec.handle}</div>
                 </div>
               </div>
@@ -137,7 +153,9 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
             <h3 className="text-lg font-bold mb-4">Add New Recipient</h3>
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">Full Name</label>
+                <label className="text-xs text-gray-400 mb-1 block">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   required
@@ -148,7 +166,9 @@ export const RecipientsScreen: React.FC<RecipientsScreenProps> = ({
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-400 mb-1 block">PayZen Handle</label>
+                <label className="text-xs text-gray-400 mb-1 block">
+                  PayZen Handle
+                </label>
                 <input
                   type="text"
                   placeholder="e.g. @alex"

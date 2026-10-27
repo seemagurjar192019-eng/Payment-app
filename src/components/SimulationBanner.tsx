@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import React from "react";
+import { ShieldCheck } from "lucide-react";
 
 export const SimulationBanner: React.FC = () => {
   return (

@@ -16,16 +16,24 @@ export interface SettlementTransfer {
 }
 
 export class BillSplitter {
-  public static calculateSettlements(participants: ExpenseParticipant[]): SettlementTransfer[] {
-    const netBalances: { userId: string; net: number }[] = participants.map(p => ({
-      userId: p.name,
-      net: p.paidAmount - p.owedAmount
-    })).filter(p => Math.abs(p.net) > 0.01);
+  public static calculateSettlements(
+    participants: ExpenseParticipant[],
+  ): SettlementTransfer[] {
+    const netBalances: { userId: string; net: number }[] = participants
+      .map((p) => ({
+        userId: p.name,
+        net: p.paidAmount - p.owedAmount,
+      }))
+      .filter((p) => Math.abs(p.net) > 0.01);
 
     const settlements: SettlementTransfer[] = [];
 
-    const debtors = netBalances.filter(b => b.net < 0).sort((a, b) => a.net - b.net);
-    const creditors = netBalances.filter(b => b.net > 0).sort((a, b) => b.net - a.net);
+    const debtors = netBalances
+      .filter((b) => b.net < 0)
+      .sort((a, b) => a.net - b.net);
+    const creditors = netBalances
+      .filter((b) => b.net > 0)
+      .sort((a, b) => b.net - a.net);
 
     let dIdx = 0;
     let cIdx = 0;
@@ -39,7 +47,7 @@ export class BillSplitter {
       settlements.push({
         fromUser: debtor.userId,
         toUser: creditor.userId,
-        amount: Math.round(settleAmount * 100) / 100
+        amount: Math.round(settleAmount * 100) / 100,
       });
 
       debtor.net += settleAmount;
